@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timezone Converter</title>
+    <style>
+        body{
+            font-family: Arial;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .box{
+            width: 350px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+        input, select, button{
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Timezone Converter</h2>
+
+    <label>Enter Time (HH:MM)</label>
+    <input type="time" id="timeInput">
+
+    <label>From (UTC)</label>
+    <select id="from">
+        <option value="0">UTC 0</option>
+        <option value="5.5">UTC +5:30 (India)</option>
+        <option value="-5">UTC -5 (USA)</option>
+        <option value="1">UTC +1 (Europe)</option>
+        <option value="9">UTC +9 (Japan)</option>
+    </select>
+
+    <label>To (UTC)</label>
+    <select id="to">
+        <option value="0">UTC 0</option>
+        <option value="5.5">UTC +5:30 (India)</option>
+        <option value="-5">UTC -5 (USA)</option>
+        <option value="1">UTC +1 (Europe)</option>
+        <option value="9">UTC +9 (Japan)</option>
+    </select>
+
+    <button onclick="convert()">Convert</button>
+
+    <h3 id="result"></h3>
+</div>
+
+<script>
+function convert() {
+    let time = document.getElementById("timeInput").value;
+    let from = parseFloat(document.getElementById("from").value);
+    let to = parseFloat(document.getElementById("to").value);
+
+    if (!time) {
+        alert("Please enter a time.");
+        return;
+    }
+
+    let [hour, minute] = time.split(":").map(Number);
+
+    let convertedHour = hour - from + to;
+
+    if (convertedHour >= 24) convertedHour -= 24;
+    if (convertedHour < 0) convertedHour += 24;
+
+    document.getElementById("result").innerText =
+        "Converted Time: " + String(convertedHour).padStart(2, '0') 
+        + ":" + String(minute).padStart(2, '0');
+}
+</script>
+
+</body>
+</html>
